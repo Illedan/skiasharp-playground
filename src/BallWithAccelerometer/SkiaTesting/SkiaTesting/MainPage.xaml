@@ -1,0 +1,22 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             mc:Ignorable="d" 
+             x:Class="SkiaTesting.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <skia:SKCanvasView Grid.Row="0"
+                           PaintSurface="OnCanvasViewPaintSurface"/>
+        <Button Text="Yolo"
+                Grid.RowSpan="1"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"/>
+        <skia:SKCanvasView Grid.Row="1"
+                           PaintSurface="OnCanvasViewPaintSurface2"/>
+    </Grid>
+</ContentPage>
