@@ -15,8 +15,8 @@ namespace GameEngine.Framework.Components
         private readonly float width;
         private readonly SKCanvas canvas;
         private float lastX;
-        private const float minDist = 10, maxDist = 100;
-        private readonly Random rnd = new Random();
+        private const float minDist = 10, maxDist = 40;
+        private static readonly Random rnd = new Random();
         SKPaint fillPaint;
 
         public RandomMountainCreationComponent(float speed, float max, float min, float height, float width, SKColor color, SKCanvas canvas)
@@ -36,10 +36,16 @@ namespace GameEngine.Framework.Components
             var lastHeight = (float)(rnd.NextDouble() * (max - min) + min);
             while (lastX < width)
             {
+                var maxRise = rnd.Next(4, 20);
                 float next = (float)(rnd.NextDouble() * (maxDist - minDist) + minDist);
                 var nextHeight = (float)(rnd.NextDouble() * (max - min) / 2 + rnd.NextDouble() * (max - min) / 2 + min);
+                if(Math.Abs(nextHeight-lastHeight) > (max - min) / maxRise)
+                {
+                    nextHeight = nextHeight > lastHeight ? (lastHeight + (max - min) / maxRise) : (lastHeight - (max - min) / maxRise);
+                }
                 points.Add(new Position(lastX+next, nextHeight, 0));
                 lastX += next;
+                lastHeight = nextHeight;
             }
         }
 
@@ -57,8 +63,15 @@ namespace GameEngine.Framework.Components
 
             while(points[points.Count-1].X < width)
             {
+                var maxRise = rnd.Next(4, 20);
                 float next = (float)(rnd.NextDouble() * (maxDist - minDist) + minDist);
                 var nextHeight = (float)(rnd.NextDouble() * (max - min) / 2 + rnd.NextDouble() * (max - min) / 2 + min);
+                var lastHeight = points[points.Count - 1].Y;
+                if (Math.Abs(nextHeight - lastHeight) > (max - min) / maxRise)
+                {
+                    nextHeight = nextHeight > lastHeight ? (lastHeight + (max - min) / maxRise) : (lastHeight - (max - min) / maxRise);
+                }
+
                 points.Add(new Position(points[points.Count - 1].X+next, nextHeight, 0));
                 lastX += next;
             }
