@@ -42,7 +42,7 @@ namespace SkiaLoading.Sprite
             {
                 index++;
                 if (index >= bitmaps.Count) index = 0;
-                sumTime = 0;
+                sumTime -= SwapTime;
             }
 
             var canvas = e.Surface.Canvas;
