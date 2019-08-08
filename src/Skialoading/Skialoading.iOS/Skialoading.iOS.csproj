@@ -130,7 +130,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Skialoading\Skialoading.csproj">
       <Project>{C6B18545-8833-45ED-92BF-5CF66E1B6CF5}</Project>
-      <Name>Skialoading</Name>
+      <Name>SkiaLoading</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

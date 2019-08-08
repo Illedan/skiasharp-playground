@@ -4,18 +4,36 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using SkiaDemo.Mountain;
+using Skialoading.Loading;
+using SkiaLoading.Combination;
+using SkiaLoading.Sprite;
+using SkiaLoading.Stars;
 using Xamarin.Forms;
 
 namespace Skialoading
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = this;
         }
+
+        public ICommand OpenLoadingCommand => new Command(o => Push(new LoadingPage()));
+
+        public ICommand OpenMountainCommand => new Command(o => Push(new MountainPage()));
+
+        public ICommand OpenStarsCommand => new Command(o => Push(new StarPage()));
+
+        public ICommand OpenCombinationCommand => new Command(o => Push(new CombinationPage()));
+        
+        public ICommand OpenSpriteAnimationCommand => new Command(o => Push(new SpriteAnimationPage()));
+
+
+        private async void Push(Page page) => await Navigation.PushAsync(page);
     }
 }

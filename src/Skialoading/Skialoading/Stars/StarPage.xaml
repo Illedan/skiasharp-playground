@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:stars="clr-namespace:SkiaLoading.Stars"
+             x:Class="SkiaLoading.Stars.StarPage"
+             BackgroundColor="Black">
+    <stars:StarView NumStars="60"
+                    MinDist="50"
+        ></stars:StarView>
+</ContentPage>

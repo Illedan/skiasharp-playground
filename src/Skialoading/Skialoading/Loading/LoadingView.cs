@@ -35,10 +35,9 @@ namespace Skialoading
         private void Redraw(object sender, SKPaintSurfaceEventArgs e)
         {
             strokePaint.StrokeWidth = StrokeWidth;
-            SKSurface surface = e.Surface;
-            SKCanvas canvas = surface.Canvas;
-            int width = e.Info.Width;
-            int height = e.Info.Height;
+            var canvas = e.Surface.Canvas;
+            var width = e.Info.Width;
+            var height = e.Info.Height;
             canvas.Clear();
             canvas.Save();
             canvas.Translate(width / 2, height / 2);
@@ -64,6 +63,7 @@ namespace Skialoading
                     point = graph.Path[pos];
                     path.LineTo(point);
                 }
+
                 canvas.DrawPath(path, strokePaint);
             }
 
@@ -87,7 +87,7 @@ namespace Skialoading
                 return Math.PI * angle / 180.0;
             }
 
-            float ToFloat(double val) => (float)val;
+            float ToFloat(double val) => (float) val;
 
             for(var i = 180; i > -180; i--)
             {

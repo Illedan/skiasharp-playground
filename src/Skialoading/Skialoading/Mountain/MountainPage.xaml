@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mountain="clr-namespace:SkiaDemo.Mountain"
+             xmlns:skiasharp="clr-namespace:SkiaSharp;assembly=SkiaSharp"
+             xmlns:stars="clr-namespace:SkiaLoading.Stars"
+             x:Class="SkiaDemo.Mountain.MountainPage">
+    <Grid BackgroundColor="#343434"
+          Margin="0,0,0,0">
+        <mountain:MountainView HeightDiff="200"
+                               Speed="-1"
+                               UpdateLength="10"
+                               MinUpdateLength="5"
+                               Margin="0,50,0,0"
+                               MaxAngleChange="30"
+                               Color="{x:Static skiasharp:SKColors.DimGray}"/>
+
+        <mountain:MountainView HeightDiff="150"
+                               Speed="-2"
+                               UpdateLength="30"
+                               MinUpdateLength="10"
+                               Margin="0,75,0,0"
+                               MaxAngleChange="60"
+                               Color="{x:Static mountain:MountainColors.MiddleMountainColor}"/>
+
+        <mountain:MountainView HeightDiff="50"
+                                Speed="-3"
+                                UpdateLength="50"
+                                MinUpdateLength="5"
+                                Margin="0,135,0,0"
+                                MaxAngleChange="25"
+                                Color="{x:Static mountain:MountainColors.FronMountainColor}"/>
+
+        <mountain:MountainView HeightDiff="50"
+                                Speed="-4"
+                                UpdateLength="30"
+                                MinUpdateLength="20"
+                                Margin="0,170,0,0"
+                                MaxAngleChange="2"
+                                Color="{x:Static skiasharp:SKColors.SaddleBrown}"
+                                Opacity="0.3"/>
+    </Grid>
+</ContentPage>
