@@ -7,15 +7,15 @@
     <Grid BackgroundColor="#343434"
           Margin="0,0,0,0">
         <mountain:MountainView HeightDiff="200"
-                               Speed="-1"
-                               UpdateLength="10"
+                               Speed="-30"
+                               UpdateLength="100"
                                MinUpdateLength="5"
                                Margin="0,50,0,0"
-                               MaxAngleChange="30"
+                               MaxAngleChange="90"
                                Color="{x:Static skiasharp:SKColors.DimGray}"/>
 
         <mountain:MountainView HeightDiff="150"
-                               Speed="-2"
+                               Speed="-50"
                                UpdateLength="30"
                                MinUpdateLength="10"
                                Margin="0,75,0,0"
@@ -23,20 +23,13 @@
                                Color="{x:Static mountain:MountainColors.MiddleMountainColor}"/>
 
         <mountain:MountainView HeightDiff="50"
-                                Speed="-3"
-                                UpdateLength="50"
+                                Speed="-80"
+                                UpdateLength="100"
                                 MinUpdateLength="5"
                                 Margin="0,135,0,0"
-                                MaxAngleChange="25"
-                                Color="{x:Static mountain:MountainColors.FronMountainColor}"/>
+                                MaxAngleChange="30"
+                               Opacity="0.9"
+                                Color="{x:Static skiasharp:SKColors.DarkSalmon}"/>
 
-        <mountain:MountainView HeightDiff="50"
-                                Speed="-4"
-                                UpdateLength="30"
-                                MinUpdateLength="20"
-                                Margin="0,170,0,0"
-                                MaxAngleChange="2"
-                                Color="{x:Static skiasharp:SKColors.SaddleBrown}"
-                                Opacity="0.3"/>
     </Grid>
 </ContentPage>

@@ -17,5 +17,39 @@
     <Folder Include="Combination\" />
     <Folder Include="Sprite\" />
     <Folder Include="Time\" />
+    <Folder Include="Media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Media\Bird1.png" />
+    <None Remove="Media\Bird2.png" />
+    <None Remove="Media\Bird3.png" />
+    <None Remove="Media\Bird4.png" />
+    <None Remove="Media\Bird5.png" />
+    <None Remove="Media\Bird6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Media\Bird1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Media\Bird2.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Media\Bird3.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Media\Bird4.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Media\Bird5.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Media\Bird6.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sprite="clr-namespace:SkiaLoading.Sprite"
              x:Class="SkiaLoading.Sprite.SpriteAnimationPage">
-    <sprite:SpriteAnimationView>
+    <sprite:SpriteAnimationView SwapTime="0.09" Scale="1">
         <sprite:SpriteAnimationView.Sprites>
-            <x:String>Test</x:String>
+            <x:String>Media.Bird1.png</x:String>
+            <x:String>Media.Bird2.png</x:String>
+            <x:String>Media.Bird3.png</x:String>
+            <x:String>Media.Bird4.png</x:String>
+            <x:String>Media.Bird5.png</x:String>
+            <x:String>Media.Bird6.png</x:String>
         </sprite:SpriteAnimationView.Sprites>
     </sprite:SpriteAnimationView>
 </ContentPage>

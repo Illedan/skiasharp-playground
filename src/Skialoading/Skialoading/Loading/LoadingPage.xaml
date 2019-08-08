@@ -6,7 +6,7 @@
 
     <skialoading:LoadingView HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"
-                                Speed="20"
+                                Speed="10"
                                 Length="150"
-                                StrokeWidth="5"/>
+                                StrokeWidth="9"/>
 </ContentPage>
