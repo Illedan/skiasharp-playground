@@ -46,6 +46,13 @@ namespace SkiaDemo.Mountain
             var canvas = e.Surface.Canvas;
             int width = e.Info.Width;
             int height = e.Info.Height;
+            fillPaint.Shader = SKShader.CreateLinearGradient(
+                    new SKPoint(width/2.0f, 0),
+                    new SKPoint(width/2.0f, height),
+                    new SKColor[] {Color,
+                                                new SKColor(0xC0, 0xC0, 0xC0) },
+                    null,
+                    SKShaderTileMode.Clamp);
             canvas.Clear();
             if(graph == null || graph.Height != height || graph.Width != width)
             {

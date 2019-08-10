@@ -8,49 +8,41 @@
     <Grid BackgroundColor="#343434"
           Margin="0,0,0,0">
 
-        <stars:StarView NumStars="95"
-                        Margin="10"
+        <stars:StarView NumStars="30"
+                        Margin="0,10,0,400"
                         MinDist="50"
                         MaxSize="3"
-                        Speed="0.1"/>
+                        Speed="-1"/>
 
-        <mountain:MountainView HeightDiff="250"
+        <mountain:MountainView HeightDiff="100"
                                Speed="-5"
                                UpdateLength="10"
                                MinUpdateLength="5"
-                               Margin="0,50,0,0"
+                               Margin="0,50,0,150"
                                MaxAngleChange="90"
-                               Color="{x:Static skiasharp:SKColors.DimGray}"/>
+                               Color="{x:Static skiasharp:SKColors.Black}"/>
 
         <mountain:MountainView HeightDiff="150"
                                Speed="-10"
                                UpdateLength="30"
                                MinUpdateLength="10"
-                               Margin="0,75,0,0"
-                               MaxAngleChange="60"
-                               Color="{x:Static mountain:MountainColors.MiddleMountainColor}"/>
+                               Margin="0,80,0,100"
+                               MaxAngleChange="50"
+                               Color="{x:Static skiasharp:SKColors.Black}"/>
 
-        <mountain:MountainView HeightDiff="50"
+        <mountain:MountainView HeightDiff="150"
                                 Speed="-25"
                                 UpdateLength="50"
                                 MinUpdateLength="5"
-                                Margin="0,135,0,0"
-                                MaxAngleChange="25"
-                                Color="{x:Static mountain:MountainColors.FronMountainColor}"/>
+                                Margin="0,125,0,-200"
+                                MaxAngleChange="10"
+                                Color="{x:Static skiasharp:SKColors.Black}"/>
 
-        <mountain:MountainView HeightDiff="50"
-                                Speed="-25"
-                                UpdateLength="30"
-                                MinUpdateLength="20"
-                                Margin="0,170,0,0"
-                                MaxAngleChange="2"
-                                Color="{x:Static skiasharp:SKColors.SaddleBrown}"
-                                Opacity="0.3"/>
 
         <Button CornerRadius="15"
                 Text="Hello skiasharp!"
                 BackgroundColor="WhiteSmoke"
-                Margin="10"
+                Margin="10,10,10,-100"
                 Padding="50,0"
                 HorizontalOptions="End"
                 VerticalOptions="End"/>
