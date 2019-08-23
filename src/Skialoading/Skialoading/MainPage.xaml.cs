@@ -8,6 +8,7 @@ using System.Windows.Input;
 using SkiaDemo.Mountain;
 using Skialoading.Loading;
 using SkiaLoading.Combination;
+using SkiaLoading.Fireworks;
 using SkiaLoading.Smoke;
 using SkiaLoading.Sprite;
 using SkiaLoading.Stars;
@@ -33,8 +34,10 @@ namespace Skialoading
         public ICommand OpenCombinationCommand => new Command(o => Push(new CombinationPage()));
 
         public ICommand OpenSpriteAnimationCommand => new Command(o => Push(new SpriteAnimationPage()));
+
         public ICommand OpenSmokeCommand => new Command(o => Push(new SmokePage()));
 
+        public ICommand OpenFireworksCommand => new Command(o => Push(new FireworksPage()));
 
         private async void Push(Page page) => await Navigation.PushAsync(page);
     }

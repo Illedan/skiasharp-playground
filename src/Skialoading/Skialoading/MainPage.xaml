@@ -25,7 +25,8 @@
                     Value="#ffffff" />
         </Style>
     </ContentPage.Resources>
-    <ScrollView>
+    <ScrollView HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
         <StackLayout>
             <Button Command="{Binding OpenLoadingCommand}"
                     Text="Infinity loading" />
@@ -44,6 +45,9 @@
 
             <Button Command="{Binding OpenSmokeCommand}"
                     Text="Smoke particle effect" />
+
+            <Button Command="{Binding OpenFireworksCommand}"
+                    Text="Fireworks!" />
         </StackLayout>
     </ScrollView>
 
