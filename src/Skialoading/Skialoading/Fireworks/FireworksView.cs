@@ -83,7 +83,7 @@ namespace SkiaLoading.Fireworks
             {
                 var paint = confetti.Color;
                 paint.Color = paint.Color.WithAlpha((byte)confetti.Opacity);
-                canvas.DrawCircle(GetX(confetti.X), GetY(confetti.Y), 3, paint);
+                canvas.DrawCircle(GetX(confetti.X), GetY(confetti.Y), confetti.Radius, paint);
             }
 
         }
@@ -127,7 +127,7 @@ namespace SkiaLoading.Fireworks
                 var color = colors[rnd.Next(colors.Length)];
                 for (var i = 0; i < amount; i++)
                 {
-                    yield return new Confetti(X, Y, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(5, 20), color);
+                    yield return new Confetti(X, Y, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(1, 6), color);
                 }
             }
 
@@ -154,8 +154,10 @@ namespace SkiaLoading.Fireworks
 
             public void Move(float dt)
             {
+                Dy += Gravity * dt;
                 X += Dx * dt;
-                Y += Dy * dt + Gravity * dt;
+                Y += Dy * dt + Gravity * dt / 2f;
+
                 Opacity -= rnd.Next(1, 3);
             }
         }

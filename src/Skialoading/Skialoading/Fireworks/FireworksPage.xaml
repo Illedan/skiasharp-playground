@@ -5,7 +5,7 @@
     xmlns:fireworks="clr-namespace:SkiaLoading.Fireworks"
     x:Class="SkiaLoading.Fireworks.FireworksPage">
     <Grid BackgroundColor="Black">
-        <fireworks:FireworksView MinConfetti="40"
+        <fireworks:FireworksView MinConfetti="70"
                                  x:Name="firework"
                                  MaxConfetti="100" />
         <Button VerticalOptions="Center"
