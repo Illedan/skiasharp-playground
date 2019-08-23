@@ -8,6 +8,7 @@ using System.Windows.Input;
 using SkiaDemo.Mountain;
 using Skialoading.Loading;
 using SkiaLoading.Combination;
+using SkiaLoading.Smoke;
 using SkiaLoading.Sprite;
 using SkiaLoading.Stars;
 using Xamarin.Forms;
@@ -30,8 +31,9 @@ namespace Skialoading
         public ICommand OpenStarsCommand => new Command(o => Push(new StarPage()));
 
         public ICommand OpenCombinationCommand => new Command(o => Push(new CombinationPage()));
-        
+
         public ICommand OpenSpriteAnimationCommand => new Command(o => Push(new SpriteAnimationPage()));
+        public ICommand OpenSmokeCommand => new Command(o => Push(new SmokePage()));
 
 
         private async void Push(Page page) => await Navigation.PushAsync(page);

@@ -18,6 +18,7 @@
     <Folder Include="Sprite\" />
     <Folder Include="Time\" />
     <Folder Include="Media\" />
+    <Folder Include="Smoke\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Media\Bird1.png" />
