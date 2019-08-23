@@ -18,6 +18,11 @@ namespace SkiaLoading.Fireworks
             new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.White },
             new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.Yellow },
             new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.Green },
+            new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.Turquoise },
+            new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.YellowGreen },
+            new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.FloralWhite },
+            new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.Gold },
+            new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.Silver },
         };
 
         private static readonly SKPaint rocketColor = new SKPaint { Style = SKPaintStyle.Stroke, Color = SKColors.WhiteSmoke, StrokeWidth = 5 };
@@ -95,7 +100,7 @@ namespace SkiaLoading.Fireworks
             var x = rnd.Next(-100, 100);
             var y = 0;
             var targetX = rnd.Next(-300, 300);
-            var targetY = rnd.Next(800, 1000);
+            var targetY = rnd.Next(500, 1500);
             var time = (float)rnd.Next(2, 6);
             var length = (float)Math.Sqrt(Math.Pow(x - targetX, 2) + Math.Pow(y - targetY, 2));
             rockets.Add(new Rocket(x, y, length, (targetX - x) / time, (targetY - y) / time));
@@ -124,10 +129,15 @@ namespace SkiaLoading.Fireworks
 
             public IEnumerable<Confetti> GetConfetti(int amount)
             {
+                var maxSpeed = rnd.Next(10, 20);
                 var color = colors[rnd.Next(colors.Length)];
                 for (var i = 0; i < amount; i++)
                 {
-                    yield return new Confetti(X, Y, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(-20, 20) / 20f * 80f, rnd.Next(1, 6), color);
+                    var angle = rnd.NextDouble() * Math.PI * 2;
+                    var speed = rnd.Next(1, maxSpeed);
+                    var vx = Math.Cos(angle) * speed;
+                    var vy = Math.Sin(angle) * speed;
+                    yield return new Confetti(X, Y, (float)vx / 20f * 80f, (float)vy / 20f * 80f, rnd.Next(1, 7), color);
                 }
             }
 
@@ -147,7 +157,7 @@ namespace SkiaLoading.Fireworks
                 Y = y;
                 Dx = dx;
                 Dy = dy;
-                Opacity = rnd.Next(200, 256);
+                Opacity = rnd.Next(100, 150);
                 //Color = colors[rnd.Next(colors.Length)];
                 Color = color;
             }
@@ -158,7 +168,7 @@ namespace SkiaLoading.Fireworks
                 X += Dx * dt;
                 Y += Dy * dt + Gravity * dt / 2f;
 
-                Opacity -= rnd.Next(1, 3);
+                Opacity -= rnd.Next(1, 2);
             }
         }
     }
