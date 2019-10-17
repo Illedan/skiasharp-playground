@@ -48,6 +48,9 @@
 
             <Button Command="{Binding OpenFireworksCommand}"
                     Text="Fireworks!" />
+
+            <Button Command="{Binding OpenCalendarCommand}"
+                    Text="Calendar!" />
         </StackLayout>
     </ScrollView>
 

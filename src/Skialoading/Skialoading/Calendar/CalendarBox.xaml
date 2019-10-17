@@ -1,0 +1,36 @@
+﻿<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiaLoading.Calendar.CalendarBox"
+             x:Name="codebehind">
+    <ContentView.Content>
+        <Frame BindingContext="{x:Reference codebehind}"
+               BorderColor="Transparent"
+               Margin="0"
+               Padding="5"
+               BackgroundColor="Gray"
+               HasShadow="False"
+               CornerRadius="0"
+               x:Name="frame">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Text="{Binding DayOfWeek}"
+                       HorizontalOptions="Center"
+                       x:Name="daylabel"/>
+                <Label Text="{Binding Day}"
+                       Grid.Row="1"
+                       HorizontalOptions="Center"
+                       FontSize="20"
+                       x:Name="datelabel"/>
+                <Label Text="{Binding Month}"
+                       IsVisible="false"
+                       HorizontalOptions="Center"
+                       Grid.Row="2"
+                       x:Name="monthlabel"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

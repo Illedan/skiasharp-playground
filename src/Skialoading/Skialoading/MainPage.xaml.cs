@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SkiaDemo.Mountain;
 using Skialoading.Loading;
+using SkiaLoading.Calendar;
 using SkiaLoading.Combination;
 using SkiaLoading.Fireworks;
 using SkiaLoading.Smoke;
@@ -38,6 +39,8 @@ namespace Skialoading
         public ICommand OpenSmokeCommand => new Command(o => Push(new SmokePage()));
 
         public ICommand OpenFireworksCommand => new Command(o => Push(new FireworksPage()));
+
+        public ICommand OpenCalendarCommand => new Command(o => Push(new CalendarPage()));
 
         private async void Push(Page page) => await Navigation.PushAsync(page);
     }
