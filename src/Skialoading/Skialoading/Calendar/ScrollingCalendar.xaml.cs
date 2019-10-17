@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using SkiaLoading.Time;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SkiaLoading.Calendar
@@ -148,10 +149,27 @@ namespace SkiaLoading.Calendar
                     AbsoluteLayout.SetLayoutBounds(m_items[z], new Rectangle(current.X + dx, 0, .2, 1));
                 }
 
+                var prevSelected = m_items.FirstOrDefault(item => item.Selected);
                 var center = Width / 2 - Width / 10;
                 var closest = m_items.OrderBy(item => Math.Abs(item.Bounds.X - center)).First();
                 closest.Selected = true;
                 SelectedDate = closest.Date;
+                if(prevSelected != null && closest != prevSelected)
+                {
+                    try
+                    {
+                        var duration = TimeSpan.FromSeconds(0.01);
+                        Vibration.Vibrate(duration);
+                    }
+                    catch (FeatureNotSupportedException ex)
+                    {
+                        // Feature not supported on device
+                    }
+                    catch (Exception ex)
+                    {
+                        // Other error has occurred.
+                    }
+                }
 
                 for (var z = 0; z < 9; z++)
                 {
