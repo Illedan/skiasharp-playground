@@ -106,7 +106,7 @@ namespace SkiaLoading.Calendar
                         SelectedChangedCommand?.Execute(SelectedDate);
                         var center = Width / 2 - Width / 10;
                         var closest = m_items.First(item => item.Date.Day == SelectedDate.Day);
-                        var diff = closest.Bounds.X - center;
+                        var diff = center-closest.Bounds.X;
                         MoveItems(diff);
                         return false;
                     }
