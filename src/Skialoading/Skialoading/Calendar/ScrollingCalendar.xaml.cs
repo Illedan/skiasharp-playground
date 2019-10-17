@@ -124,7 +124,7 @@ namespace SkiaLoading.Calendar
         {
             lock (m_mutex)
             {
-                if(dx < 0 && m_items[8].Bounds.X < Width + Width / 2.5)
+                while (dx < 0 && m_items[8].Bounds.X < Width + Width / 2.5)
                 {
                     var last = m_items[8];
                     var first = m_items[0];
@@ -133,7 +133,7 @@ namespace SkiaLoading.Calendar
                     m_items.Add(first);
                     first.Date = last.Date.AddDays(1);
                 }
-                else if(dx > 0 && m_items[0].Bounds.X > Width / -2.5)
+                while (dx > 0 && m_items[0].Bounds.X > Width / -2.5)
                 {
                     var first = m_items[0];
                     var last = m_items[8];
@@ -142,6 +142,7 @@ namespace SkiaLoading.Calendar
                     m_items.Insert(0, last);
                     last.Date = first.Date.AddDays(-1);
                 }
+
                 for (var z = 0; z < 9; z++)
                 {
                     var item = m_items[z];
