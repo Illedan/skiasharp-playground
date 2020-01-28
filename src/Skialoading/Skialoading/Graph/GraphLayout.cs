@@ -10,14 +10,14 @@ namespace SkiaLoading.Graph
 {
     public class GraphLayout : SlidableLayout
     {
-        private static readonly SKPaint GraphColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.MediumPurple, StrokeWidth=5 };
-        private static readonly SKPaint VerticalLineColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.DimGray, StrokeWidth = 2 };
+        private static readonly SKPaint GraphColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.MediumPurple, StrokeWidth=7 };
+        private static readonly SKPaint VerticalLineColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.LightGray, StrokeWidth = 2 };
 
         private static readonly SKPaint ReferenceColor = new SKPaint
         {
             Style = SKPaintStyle.Stroke,
             Color = SKColors.DarkCyan,
-            StrokeWidth = 5,
+            StrokeWidth = 2,
             StrokeCap = SKStrokeCap.Square,
             PathEffect = SKPathEffect.CreateDash(new []{10f, 20f}, 25)
         };
