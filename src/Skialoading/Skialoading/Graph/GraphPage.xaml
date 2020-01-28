@@ -5,21 +5,44 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dxui="http://dips.xamarin.ui.com"
     xmlns:graph="clr-namespace:SkiaLoading.Graph">
-    <Grid>
+    <Grid Margin="0,5,0,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="150" />
             <RowDefinition />
             <RowDefinition Height="75" />
         </Grid.RowDefinitions>
-        <graph:GraphLayout
-            Config="{Binding Config}"
-            Repository="{Binding .}"
-            SlideProperties="{Binding SlidableProperties}" />
+        <Frame
+            Margin="-5,0"
+            Padding="0"
+            BorderColor="DarkCyan"
+            HasShadow="False">
+            <graph:GraphLayout
+                Config="{Binding Config}"
+                Reference="{Binding Reference}"
+                Repository="{Binding Graph1}"
+                SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+        </Frame>
+
+        <Frame
+            Grid.Row="1"
+            Margin="-5,0"
+            Padding="0"
+            BorderColor="DarkCyan"
+            HasShadow="False">
+            <graph:GraphLayout
+                Config="{Binding Config}"
+                Reference="{Binding Reference}"
+                Repository="{Binding Graph2}"
+                SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+        </Frame>
+
 
         <dxui:SlidableContentLayout
-            Grid.Row="1"
+            Grid.Row="3"
             Padding="0,10"
             BackgroundColor="LightGray"
             Config="{Binding Config}"
-            SlideProperties="{Binding SlidableProperties}" />
+            SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
     </Grid>
 </ContentPage>
