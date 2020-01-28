@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="SkiaLoading.Graph.GraphPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxui="http://dips.xamarin.ui.com"
+    xmlns:graph="clr-namespace:SkiaLoading.Graph">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="75" />
+        </Grid.RowDefinitions>
+        <graph:GraphLayout
+            Config="{Binding Config}"
+            Repository="{Binding .}"
+            SlideProperties="{Binding SlidableProperties}" />
+
+        <dxui:SlidableContentLayout
+            Grid.Row="2"
+            Padding="0,10"
+            BackgroundColor="LightGray"
+            Config="{Binding Config}"
+            SlideProperties="{Binding SlidableProperties}" />
+    </Grid>
+</ContentPage>

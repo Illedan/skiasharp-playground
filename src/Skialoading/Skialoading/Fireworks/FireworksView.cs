@@ -129,7 +129,7 @@ namespace SkiaLoading.Fireworks
 
             public IEnumerable<Confetti> GetConfetti(int amount)
             {
-                var maxSpeed = rnd.Next(10, 20);
+                var maxSpeed = rnd.Next(50, 150);
                 var color = colors[rnd.Next(colors.Length)];
                 for (var i = 0; i < amount; i++)
                 {
@@ -137,7 +137,7 @@ namespace SkiaLoading.Fireworks
                     var speed = rnd.Next(1, maxSpeed);
                     var vx = Math.Cos(angle) * speed;
                     var vy = Math.Sin(angle) * speed;
-                    yield return new Confetti(X, Y, (float)vx / 20f * 80f, (float)vy / 20f * 80f, rnd.Next(1, 7), color);
+                    yield return new Confetti(X, Y, (float)vx / 20f * 80f, (float)vy / 20f * 80f, rnd.Next(3, 7), color);
                 }
             }
 
@@ -146,9 +146,9 @@ namespace SkiaLoading.Fireworks
 
         private class Confetti
         {
-            private const float Gravity = -30f;
+            private const float Gravity = -100f;
             public float X, Y, Dx, Dy;
-            public int Opacity, Radius;
+            public float Opacity, Radius;
             public SKPaint Color;
             public Confetti(float x, float y, float dx, float dy, int radius, SKPaint color)
             {
@@ -157,7 +157,7 @@ namespace SkiaLoading.Fireworks
                 Y = y;
                 Dx = dx;
                 Dy = dy;
-                Opacity = rnd.Next(100, 150);
+                Opacity = rnd.Next(100, 300);
                 //Color = colors[rnd.Next(colors.Length)];
                 Color = color;
             }
@@ -168,7 +168,11 @@ namespace SkiaLoading.Fireworks
                 X += Dx * dt;
                 Y += Dy * dt + Gravity * dt / 2f;
 
-                Opacity -= rnd.Next(1, 2);
+                Dx -= Dx * 0.9f * dt;
+                Dy -= Dy * 0.9f * dt;
+
+                Opacity -= rnd.Next(2, 7);
+                Radius -= Radius * 0.3f * dt;
             }
         }
     }
