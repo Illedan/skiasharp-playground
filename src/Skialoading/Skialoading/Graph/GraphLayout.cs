@@ -60,7 +60,7 @@ namespace SkiaLoading.Graph
                     if (pos < Config.MinValue || pos > Config.MaxValue) continue;
                     if (!hasValue || point.DValue == null) continue;
 
-                    var x = (float)(width/2 + itemWidth * (i - m_selectedIndex) + (m_offset%itemWidth));
+                    var x = (float)(width/2 + itemWidth * (i - m_lastIndex));
                     var y = GetValue(point.DValue.Value, max, min, height);
                     canvas.DrawCircle(x, y, 10, GraphColor);
                     var currentPos = new SKPoint(x, y);

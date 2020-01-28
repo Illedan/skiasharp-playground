@@ -18,9 +18,16 @@ namespace SkiaLoading.Graph
             AddPoint(new GraphPoint(6, "T5", 3));
             AddPoint(new GraphPoint(8, "T6", 4));
             AddPoint(new GraphPoint(10, "T7", 2));
+            var rnd = new Random();
+            for(var i = 11; i < 100; i++)
+            {
+                if (rnd.NextDouble() < 0.3) continue;
+                AddPoint(new GraphPoint(i, "T"+i, rnd.Next(0, 20)));
+            }
+            SlidableProperties = new SlidableProperties(-20);
         }
 
-        public SliderConfig Config => new SliderConfig(-11, 0);
+        public SliderConfig Config => new SliderConfig(-100, 0);
 
         public SlidableProperties SlidableProperties { get => slidableProperties; set => PropertyChanged?.RaiseWhenSet(ref slidableProperties, value); }
 
