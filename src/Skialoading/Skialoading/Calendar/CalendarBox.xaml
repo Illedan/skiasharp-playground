@@ -1,36 +1,51 @@
-﻿<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SkiaLoading.Calendar.CalendarBox"
-             x:Name="codebehind">
+﻿<ContentView
+    x:Class="SkiaLoading.Calendar.CalendarBox"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="codebehind">
     <ContentView.Content>
-        <Frame BindingContext="{x:Reference codebehind}"
-               BorderColor="Transparent"
-               Margin="0"
-               Padding="5"
-               BackgroundColor="Gray"
-               HasShadow="False"
-               CornerRadius="0"
-               x:Name="frame">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Label Text="{Binding DayOfWeek}"
-                       HorizontalOptions="Center"
-                       x:Name="daylabel"/>
-                <Label Text="{Binding Day}"
-                       Grid.Row="1"
-                       HorizontalOptions="Center"
-                       FontSize="20"
-                       x:Name="datelabel"/>
-                <Label Text="{Binding Month}"
-                       IsVisible="false"
-                       HorizontalOptions="Center"
-                       Grid.Row="2"
-                       x:Name="monthlabel"/>
-            </Grid>
-        </Frame>
+        <Grid BindingContext="{x:Reference codebehind}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Frame
+                x:Name="frame"
+                Grid.RowSpan="3"
+                Margin="0"
+                Padding="5"
+                BackgroundColor="Gray"
+                BorderColor="Transparent"
+                CornerRadius="0"
+                HasShadow="False"
+                InputTransparent="True"
+                Opacity="0.8" />
+            <Label
+                x:Name="daylabel"
+                HorizontalOptions="Center"
+                InputTransparent="True"
+                Text="{Binding DayOfWeek}" />
+            <Label
+                x:Name="datelabel"
+                Grid.Row="1"
+                FontSize="20"
+                HorizontalOptions="Center"
+                InputTransparent="True"
+                Text="{Binding Day}" />
+            <Label
+                x:Name="monthlabel"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                InputTransparent="True"
+                IsVisible="false"
+                Text="{Binding Month}" />
+            <Button
+                x:Name="btn"
+                Grid.RowSpan="3"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent" />
+        </Grid>
     </ContentView.Content>
 </ContentView>

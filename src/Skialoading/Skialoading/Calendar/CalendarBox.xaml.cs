@@ -5,7 +5,7 @@ namespace SkiaLoading.Calendar
 {
     public partial class CalendarBox : ContentView
     {
-        private static Color m_selectedColor = Color.DarkGreen, m_normalColor = Color.WhiteSmoke;
+        private static Color m_selectedColor = Color.DarkGreen, m_normalColor = Color.Transparent;
         private static Color m_selectedForeground = Color.WhiteSmoke, m_normalForeground= Color.Black;
         public CalendarBox()
         {
@@ -17,6 +17,8 @@ namespace SkiaLoading.Calendar
         public string DayOfWeek => Date.ToString("ddd");
         public string Month => Date.ToString("MMM").ToUpper();
 
+        public Button Btn => btn;
+
         public static readonly BindableProperty SelectedProperty =
             BindableProperty.Create(nameof(Selected),
                 typeof(bool),
@@ -24,6 +26,7 @@ namespace SkiaLoading.Calendar
                 false,
                 BindingMode.TwoWay,
                 propertyChanged: OnChanged);
+
 
         public bool Selected
         {
@@ -53,6 +56,7 @@ namespace SkiaLoading.Calendar
                 cb.daylabel.TextColor = m_selectedForeground;
                 cb.monthlabel.TextColor = m_selectedForeground;
                 cb.datelabel.TextColor = m_selectedForeground;
+                cb.frame.FadeTo(1.0, 500);
             }
             else
             {
@@ -60,6 +64,7 @@ namespace SkiaLoading.Calendar
                 cb.frame.BackgroundColor = m_normalColor;
                 cb.daylabel.TextColor = m_normalForeground;
                 cb.datelabel.TextColor = m_normalForeground;
+                cb.frame.FadeTo(0.5, 50);
             }
         }
 

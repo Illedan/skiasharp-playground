@@ -10,6 +10,7 @@ namespace SkiaLoading.Calendar
 {
     public partial class ScrollingCalendar : ContentView
     {
+        private bool m_clicked;
         private const double m_friction = 0.95, m_gravity = 10;
         private double m_lastWidth;
         private List<CalendarBox> m_items = new List<CalendarBox>();
@@ -50,6 +51,15 @@ namespace SkiaLoading.Calendar
                         Date = date
                     };
 
+                    border.Btn.Command = new Command(() =>
+                    {
+                        SelectedChangedCommand?.Execute(date);
+                        var center = Width / 2 - Width / 10;
+                        var closest = border;
+                        var dd = center - closest.Bounds.X;
+                        LastMove(dd);
+                    });
+
                     AbsoluteLayout.SetLayoutBounds(border, new Rectangle(Width / 5 * (i-2), 0, .2, 1));
                     AbsoluteLayout.SetLayoutFlags(border, AbsoluteLayoutFlags.SizeProportional);
                     panel.Children.Add(border);
@@ -68,6 +78,7 @@ namespace SkiaLoading.Calendar
             m_dragId = args.GestureId;
             if(args.StatusType == GestureStatus.Started)
             {
+                m_clicked = false;
                 m_tracker = new TimeTracker();
                 m_drags = new List<(double dist, double t)>();
             }
@@ -98,19 +109,20 @@ namespace SkiaLoading.Calendar
 
                 Device.StartTimer(TimeSpan.FromMilliseconds(1000.0/60.0), () =>
                 {
+                    if (m_clicked) return false;
                     if (m_dragId != args.GestureId || double.IsInfinity(speed) || double.IsNaN(speed)) return false;
                     var time = timer.TotalTime();
-                    var theSpeed = speed * Math.Pow(m_friction, time*150);
+                    var theSpeed = speed * Math.Pow(m_friction, time*200);
                     var dist =  theSpeed * time;
 
                     MoveItems(dist);
-                    if (Math.Abs(theSpeed) <= 2)
+                    if (Math.Abs(theSpeed) <= 10)
                     {
                         SelectedChangedCommand?.Execute(SelectedDate);
                         var center = Width / 2 - Width / 10;
                         var closest = m_items.First(item => item.Date.Day == SelectedDate.Day);
                         var diff = center-closest.Bounds.X;
-                        MoveItems(diff);
+                        LastMove(diff);
                         return false;
                     }
 
@@ -120,6 +132,15 @@ namespace SkiaLoading.Calendar
             }
 
             m_prevDx = args.TotalX;
+        }
+
+        private async void LastMove(double dx)
+        {
+            var itemWidth = Width / 5;
+            var diff = Math.Abs(dx)/itemWidth;
+            await panel.TranslateTo(dx, 0, (uint)(diff*150), Easing.CubicIn);
+            MoveItems(dx);
+            panel.TranslationX = 0;
         }
 
         private void MoveItems(double dx)
