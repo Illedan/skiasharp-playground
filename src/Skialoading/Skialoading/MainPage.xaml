@@ -1,53 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:skialoading="clr-namespace:Skialoading"
-             mc:Ignorable="d"
-             x:Class="Skialoading.MainPage"
-             BackgroundColor="#efefef">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Skialoading.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:skialoading="clr-namespace:Skialoading"
+    xmlns:triangle="clr-namespace:SkiaLoading.Triangle"
+    BackgroundColor="#efefef"
+    mc:Ignorable="d">
     <ContentPage.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="CornerRadius"
-                    Value="10" />
-            <Setter Property="BorderColor"
-                    Value="#000000" />
-            <Setter Property="Margin"
-                    Value="10" />
-            <Setter Property="HorizontalOptions"
-                    Value="FillAndExpand" />
-            <Setter Property="VerticalOptions"
-                    Value="Start" />
-            <Setter Property="BackgroundColor"
-                    Value="#336699" />
-            <Setter Property="TextColor"
-                    Value="#ffffff" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderColor" Value="#000000" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="BackgroundColor" Value="#336699" />
+            <Setter Property="TextColor" Value="#ffffff" />
         </Style>
     </ContentPage.Resources>
-    <ScrollView HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand">
+    <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <StackLayout>
-            <Button Command="{Binding OpenLoadingCommand}"
-                    Text="Infinity loading" />
+            <Button Command="{Binding OpenLoadingCommand}" Text="Infinity loading" />
 
-            <Button Command="{Binding OpenMountainCommand}"
-                    Text="Flying mountains" />
+            <Button Command="{Binding OpenMountainCommand}" Text="Flying mountains" />
 
-            <Button Command="{Binding OpenStarsCommand}"
-                    Text="Shiny stars" />
+            <Button Command="{Binding OpenStarsCommand}" Text="Shiny stars" />
 
-            <Button Command="{Binding OpenCombinationCommand}"
-                    Text="Perfect scenery" />
+            <Button Command="{Binding OpenCombinationCommand}" Text="Perfect scenery" />
 
-            <Button Command="{Binding OpenSpriteAnimationCommand}"
-                    Text="Sprite animation" />
+            <Button Command="{Binding OpenSpriteAnimationCommand}" Text="Sprite animation" />
 
-            <Button Command="{Binding OpenSmokeCommand}"
-                    Text="Smoke particle effect" />
+            <Button Command="{Binding OpenSmokeCommand}" Text="Smoke particle effect" />
 
-            <Button Command="{Binding OpenFireworksCommand}"
-                    Text="Fireworks!" />
+            <Button Command="{Binding OpenFireworksCommand}" Text="Fireworks!" />
+
+            <Button Command="{Binding OpenCalendarCommand}" Text="Calendar!" />
+
+            <Button Command="{Binding OpenGraphCommand}" Text="Graph" />
         </StackLayout>
     </ScrollView>
 

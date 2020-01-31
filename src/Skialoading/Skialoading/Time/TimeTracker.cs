@@ -21,5 +21,11 @@ namespace SkiaLoading.Time
             lastTime = time;
             return dt;
         }
+
+        public float TotalTime()
+        {
+            var time = stopwatch.ElapsedMilliseconds;
+            return time / 1000.0f;
+        }
     }
 }

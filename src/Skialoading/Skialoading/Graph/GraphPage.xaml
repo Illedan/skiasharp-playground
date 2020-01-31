@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="SkiaLoading.Graph.GraphPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxui="http://dips.xamarin.ui.com"
+    xmlns:graph="clr-namespace:SkiaLoading.Graph">
+    <Grid Margin="0,5,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalOptions="FillAndExpand">
+
+            <StackLayout>
+
+                <Frame
+                    Margin="-5,0"
+                    Padding="0"
+                    BorderColor="DarkCyan"
+                    HasShadow="False"
+                    HeightRequest="150">
+                    <graph:GraphLayout
+                        Margin="0"
+                        Padding="0"
+                        Config="{Binding Config}"
+                        Reference="{Binding Reference}"
+                        Repository="{Binding Graph1}"
+                        SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+                </Frame>
+
+                <Frame
+                    Margin="-5,0"
+                    Padding="0"
+                    BorderColor="DarkCyan"
+                    HasShadow="False"
+                    HeightRequest="150">
+                    <graph:GraphLayout
+                        Margin="0"
+                        Padding="0"
+                        Config="{Binding Config}"
+                        Reference="{Binding Reference}"
+                        Repository="{Binding Graph2}"
+                        SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+
+
+        <dxui:SlidableContentLayout
+            Grid.Row="1"
+            Padding="0,10"
+            BackgroundColor="LightGray"
+            Config="{Binding Config}"
+            SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+    </Grid>
+</ContentPage>

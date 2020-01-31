@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiaLoading.Calendar.ScrollingCalendar"
+             x:Name="test">
+    <ContentView.Content>
+        <Grid BindingContext="{x:Reference test}">
+            <AbsoluteLayout x:Name="panel" Padding="0" Margin="0"/>
+            <Frame HorizontalOptions="FillAndExpand"
+                   Margin="0"
+                   Padding="0"
+                   BorderColor="Transparent"
+                   BackgroundColor="#01000000"
+                   VerticalOptions="FillAndExpand">
+                <Frame.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="OnUpdated"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

@@ -69,6 +69,7 @@ namespace SkiaDemo.Mountain
                 {
                     path.LineTo(point);
                 }
+
                 path.LineTo(new SKPoint(graph.Path[graph.Path.Count - 1].X, height));
                 path.Close();
                 canvas.DrawPath(path, fillPaint);
