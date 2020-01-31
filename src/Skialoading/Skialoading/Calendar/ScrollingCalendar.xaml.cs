@@ -82,15 +82,17 @@ namespace SkiaLoading.Calendar
             }
             else if(m_drags.Count > 0)
             {
-                var endTime = m_tracker.GetTime();
                 var i = m_drags.Count - 1;
+                var t = 0.0;
+                var d = 0.0;
                 for(; i >= 0; i--)
                 {
-                    if (endTime - m_drags[i].t > 0.3) break;
+                    t += m_drags[i].t;
+                    if (t > 0.2) break;
                 }
 
                 if (i < 0) i = 0;
-                var speed = (m_drags[i].dist - args.TotalX)/(endTime-m_drags[i].t);
+                var speed = (m_drags[m_drags.Count - 1].dist - m_drags[i].dist) / (t);
                 var timer = new TimeTracker();
                 var width = Width;
 
@@ -98,7 +100,7 @@ namespace SkiaLoading.Calendar
                 {
                     if (m_dragId != args.GestureId || double.IsInfinity(speed) || double.IsNaN(speed)) return false;
                     var time = timer.TotalTime();
-                    var theSpeed = speed * Math.Pow(m_friction, time*250);
+                    var theSpeed = speed * Math.Pow(m_friction, time*150);
                     var dist =  theSpeed * time;
 
                     MoveItems(dist);

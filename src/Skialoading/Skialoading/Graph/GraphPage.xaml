@@ -7,39 +7,49 @@
     xmlns:graph="clr-namespace:SkiaLoading.Graph">
     <Grid Margin="0,5,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
-            <RowDefinition Height="150" />
-            <RowDefinition />
-            <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <Frame
-            Margin="-5,0"
-            Padding="0"
-            BorderColor="DarkCyan"
-            HasShadow="False">
-            <graph:GraphLayout
-                Config="{Binding Config}"
-                Reference="{Binding Reference}"
-                Repository="{Binding Graph1}"
-                SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
-        </Frame>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalOptions="FillAndExpand">
 
-        <Frame
-            Grid.Row="1"
-            Margin="-5,0"
-            Padding="0"
-            BorderColor="DarkCyan"
-            HasShadow="False">
-            <graph:GraphLayout
-                Config="{Binding Config}"
-                Reference="{Binding Reference}"
-                Repository="{Binding Graph2}"
-                SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
-        </Frame>
+            <StackLayout>
+
+                <Frame
+                    Margin="-5,0"
+                    Padding="0"
+                    BorderColor="DarkCyan"
+                    HasShadow="False"
+                    HeightRequest="150">
+                    <graph:GraphLayout
+                        Margin="0"
+                        Padding="0"
+                        Config="{Binding Config}"
+                        Reference="{Binding Reference}"
+                        Repository="{Binding Graph1}"
+                        SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+                </Frame>
+
+                <Frame
+                    Margin="-5,0"
+                    Padding="0"
+                    BorderColor="DarkCyan"
+                    HasShadow="False"
+                    HeightRequest="150">
+                    <graph:GraphLayout
+                        Margin="0"
+                        Padding="0"
+                        Config="{Binding Config}"
+                        Reference="{Binding Reference}"
+                        Repository="{Binding Graph2}"
+                        SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
 
 
         <dxui:SlidableContentLayout
-            Grid.Row="3"
+            Grid.Row="1"
             Padding="0,10"
             BackgroundColor="LightGray"
             Config="{Binding Config}"

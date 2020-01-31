@@ -12,6 +12,13 @@ namespace SkiaLoading.Graph
     {
         private static readonly SKPaint GraphColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.MediumPurple, StrokeWidth=7 };
         private static readonly SKPaint VerticalLineColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.LightGray, StrokeWidth = 2 };
+        private static readonly SKPaint FillPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            Color = GraphColor.Color.WithAlpha(30),
+            StrokeCap = SKStrokeCap.Butt,
+            StrokeWidth = 5
+        };
 
         private static readonly SKPaint ReferenceColor = new SKPaint
         {
@@ -46,7 +53,6 @@ namespace SkiaLoading.Graph
             if (width < 1 || Repository == null) return;
             lock (m_lock)
             {
-                
                 var points = new List<SKPoint>();
 
                 canvas.Clear();
@@ -85,47 +91,46 @@ namespace SkiaLoading.Graph
                 SKPoint? prev = null;
                 float? firstX = null;
                 float lastX = 0;
-                for (var i = m_selectedIndex - totalWidth; i <= m_selectedIndex + totalWidth; i++)
+
+                using (var path = new SKPath())
                 {
-                    var pos = (int)Math.Floor(i);
-                    var hasValue = Repository.TryGetPoint(Math.Abs(pos), out var point);
-                    if (pos < Config.MinValue || pos > Config.MaxValue) continue;
-                    var x = (float)(width/2 + itemWidth * (i - m_lastIndex+0.5));
-                    canvas.DrawLine(x, height, x, 0, VerticalLineColor);
-
-                    if (!hasValue || point.DValue == null) continue;
-                    lastX = x;
-                    if(firstX == null)
+                    for (var i = m_selectedIndex - totalWidth; i <= m_selectedIndex + totalWidth; i++)
                     {
-                        firstX = x;
-                    }
+                        var pos = (int)Math.Floor(i);
+                        if (pos < Config.MinValue || pos > Config.MaxValue) continue;
+                        var hasValue = Repository.TryGetPoint(Math.Abs(pos), out var point);
+                        var x = (float)(width/2 + itemWidth * (i - m_lastIndex+0.5));
+                        canvas.DrawLine(x, height, x, 0, VerticalLineColor);
 
-                    var y = GetValue(point.DValue.Value, max, min, height);
-                    canvas.DrawCircle(x, y, 15, GraphColor);
-                    var currentPos = new SKPoint(x, y);
-                    if (prev != null)
-                    {
-                        canvas.DrawLine(currentPos, prev.Value, GraphColor);
-                    }
+                        if (!hasValue || point.DValue == null) continue;
+                        lastX = x;
+                        var y = GetValue(point.DValue.Value, max, min, height);
+                        var currentPos = new SKPoint(x, y);
+                        if (firstX == null)
+                        {
+                            firstX = x;
+                            path.MoveTo(currentPos);
+                        }
 
-                    prev = currentPos;
-                    points.Add(currentPos);
-                }
+                        canvas.DrawCircle(x, y, 15, GraphColor);
+                        if (prev != null)
+                        {
+                            canvas.DrawLine(currentPos, prev.Value, GraphColor);
+                        }
+
+                        prev = currentPos;
+                        points.Add(currentPos);
+                        
+                        path.LineTo(currentPos);
+                    }
                 
-                if(firstX != null)
-                {
-                    var color = GraphColor.Color.WithAlpha((byte)20);
-
-                    var fillPaint = new SKPaint
+                    if(firstX != null)
                     {
-                        Style = SKPaintStyle.Fill,
-                        Color = color
-                    };
-
-                    points.Add(new SKPoint(lastX, height));
-                    points.Add(new SKPoint(firstX.Value, height));
-
-                    canvas.DrawPoints(SKPointMode.Polygon, points.ToArray(), fillPaint);
+                        path.LineTo(new SKPoint(lastX, height));
+                        path.LineTo(new SKPoint(firstX.Value, height));
+                        path.Close();
+                        canvas.DrawPath(path, FillPaint);
+                    }
                 }
             }
         }
