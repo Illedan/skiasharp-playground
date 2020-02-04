@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PanRepro.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollView HorizontalScrollBarVisibility="Never">
+        <Grid x:Name="grid" HeightRequest="2000">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Text="{Binding Pos}" TextColor="Black" />
+            <Label
+                Grid.Row="1"
+                Text="{Binding Pos}"
+                TextColor="Black" />
+            <Label
+                Grid.Row="2"
+                Text="{Binding Pos}"
+                TextColor="Black" />
+            <Label
+                Grid.Row="3"
+                Text="{Binding Pos}"
+                TextColor="Black" />
+            <Label
+                Grid.Row="4"
+                Text="{Binding Pos}"
+                TextColor="Black" />
+        </Grid>
+    </ScrollView>
+
+
+</ContentPage>
