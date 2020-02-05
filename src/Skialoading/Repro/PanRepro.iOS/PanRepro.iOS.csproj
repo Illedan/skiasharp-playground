@@ -128,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PanRepro\PanRepro.csproj">
-      <Project>{D894D4A5-DE2A-4CEE-8C46-B0F5DF0B9CD7}</Project>
+      <Project>{F1FE2AB8-23E1-4844-B611-D540F2BDCB3E}</Project>
       <Name>PanRepro</Name>
     </ProjectReference>
   </ItemGroup>

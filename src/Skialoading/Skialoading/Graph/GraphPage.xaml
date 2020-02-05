@@ -24,6 +24,7 @@
                         Margin="0"
                         Padding="0"
                         Config="{Binding Config}"
+                        DisableTouchScroll="True"
                         Reference="{Binding Reference}"
                         Repository="{Binding Graph1}"
                         SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
@@ -39,6 +40,7 @@
                         Margin="0"
                         Padding="0"
                         Config="{Binding Config}"
+                        DisableTouchScroll="True"
                         Reference="{Binding Reference}"
                         Repository="{Binding Graph2}"
                         SlideProperties="{Binding SlidableProperties, Mode=TwoWay}" />
