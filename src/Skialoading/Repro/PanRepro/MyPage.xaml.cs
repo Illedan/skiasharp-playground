@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace PanRepro
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
-    public partial class MainPage : ContentPage
+    public partial class MyPage : ContentPage
     {
-        public MainPage()
+        public MyPage()
         {
             Pos = "Text";
             InitializeComponent();
@@ -27,7 +21,7 @@ namespace PanRepro
         private void Gest_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
             Pos = e.TotalX + " " + e.TotalY;
-            foreach(var kid in grid.Children)
+            foreach (var kid in grid.Children)
             {
                 ((Label)kid).Text = Pos;
             }
