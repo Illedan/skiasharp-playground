@@ -265,7 +265,7 @@ namespace SkiaLoading.Graph
                     TextPaint.TextSize = ValueLabelFontSize;
                     FramePaint.StrokeWidth = BorderThickness;
                     canvas.DrawCircle(drawPos.X, drawPos.Y, 20, SelectedPaint);
-                    // Move the tip little away from the dot
+                    // Move the tip little away from the dots
                     var tipX = drawPos.X + 8.0f;
                     var tipY = drawPos.Y;
 
@@ -280,10 +280,10 @@ namespace SkiaLoading.Graph
                     using (var path = new SKPath())
                     {
                         var corners = new SKPoint[] {
-                            GetPoint(0, -frameRect.Height*1.2f  / 2),
-                            GetPoint(frameRect.Width*1.5f, -frameRect.Height*1.2f / 2),
-                            GetPoint(frameRect.Width*1.5f, frameRect.Height*1.2f / 2),
-                            GetPoint(0, frameRect.Height*1.2f  / 2)
+                            GetPoint(0, -frameRect.Height  / 2),
+                            GetPoint(frameRect.Width*1.5f, -frameRect.Height*1 / 2),
+                            GetPoint(frameRect.Width*1.5f, frameRect.Height*1 / 2),
+                            GetPoint(0, frameRect.Height*1  / 2)
                         };
 
                         path.MoveTo(GetPoint(-TriangleWidth, 0));
