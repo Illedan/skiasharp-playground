@@ -1,7 +1,7 @@
 ﻿using System;
 namespace SkiaLoading.Graph
 {
-    public struct Position
+    public class Position
     {
         public Position(float x, float y)
         {
@@ -9,7 +9,12 @@ namespace SkiaLoading.Graph
             Y = y;
         }
 
+        public int Index { get; set; }
         public float X { get; }
         public float Y { get; }
+
+        private float Pow(float x) => x * x;
+
+        public float Distance2(Position p2) => Pow(p2.X - X) + Pow(p2.Y - Y);
     }
 }

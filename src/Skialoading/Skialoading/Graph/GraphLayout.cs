@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using DIPS.Xamarin.UI.Controls.Slidable;
 using SkiaSharp;
@@ -10,6 +11,47 @@ namespace SkiaLoading.Graph
 {
     public class GraphLayout : SlidableLayout
     {
+
+        private readonly static SKPaint FramePaint = new SKPaint
+        {
+            Color = SKColors.LightGray,
+            Style = SKPaintStyle.Stroke,
+            StrokeJoin = SKStrokeJoin.Round,
+            IsAntialias = true
+        };
+
+        private readonly static SKPaint PinFillPaint = new SKPaint
+        {
+            Color = SKColors.WhiteSmoke,
+            Style = SKPaintStyle.StrokeAndFill,
+            IsAntialias = true
+        };
+
+        private readonly static SKPaint SelectedPaint = new SKPaint
+        {
+            Color = new SKColor(31, 75, 81),
+            Style = SKPaintStyle.StrokeAndFill,
+            IsAntialias = true
+        };
+
+        SKPaint TextPaint = new SKPaint
+        {
+            Color = SKColors.Black,
+            TextAlign = SKTextAlign.Left,
+            IsAntialias = true,
+            Typeface = SKTypeface.FromFamilyName(
+            "Arial",
+            SKFontStyleWeight.ExtraBold,
+            SKFontStyleWidth.Normal,
+            SKFontStyleSlant.Upright)
+        };
+        private static float PinScale = 3.0f;
+        private static float TriangleWidth => 4f * PinScale;
+        private static float ValueLabelPadding => 5f * PinScale;
+        private static float ValueLabelFontSize => 14f * PinScale;
+        private static float ToolTipCornerRadius => 4f * PinScale;
+        private static float BorderThickness => 1f * PinScale;
+
         private static readonly SKPaint GraphColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.MediumPurple, StrokeWidth = 7 };
         private static readonly SKPaint VerticalLineColor = new SKPaint { Style = SKPaintStyle.Fill, Color = SKColors.LightGray, StrokeWidth = 2 };
         private static readonly SKPaint FillPaint = new SKPaint
@@ -72,8 +114,7 @@ namespace SkiaLoading.Graph
 
             lock (m_lock)
             {
-                var points = new List<SKPoint>();
-
+                var posses = new List<Position>();
                 canvas.Clear();
                 var max = double.MinValue;
                 var min = double.MaxValue;
@@ -170,8 +211,8 @@ namespace SkiaLoading.Graph
                             canvas.DrawLine(currentPos, prev.Value, GraphColor);
                         }
 
+                        posses.Add(new Position(currentPos.X, currentPos.Y) { Index = iIndex });
                         prev = currentPos;
-                        points.Add(currentPos);
 
                         path.LineTo(currentPos);
                     }
@@ -184,8 +225,87 @@ namespace SkiaLoading.Graph
                         canvas.DrawPath(path, FillPaint);
                     }
                 }
+
+                //Pin drawing
+                var closest = posses.OrderBy(p => Math.Abs(center-p.X)).FirstOrDefault();
+                if (closest != null && closest.Index >= Config.MinValue && closest.Index <= Config.MaxValue)
+                {
+                    var nextVal = closest;
+                    var dir = closest.Index < m_index ? 1 : -1;
+                    if(dir == 1)
+                    {
+                        nextVal = posses.Where(p => p.X > closest.X).OrderBy(p => Math.Abs(p.X - closest.X)).FirstOrDefault();
+                    }
+                    else
+                    {
+                        nextVal = posses.Where(p => p.X < closest.X).OrderBy(p => Math.Abs(p.X - closest.X)).FirstOrDefault();
+                    }
+
+                    Position drawPos;
+
+                    if (!Repository.TryGetPoint(Math.Abs(closest.Index), out var value))
+                    {
+                        return;
+                    }
+
+                    if (nextVal == null)
+                    {
+                        drawPos = new Position(closest.X, closest.Y);
+                    }
+                    else
+                    {
+                        var dx = nextVal.X - closest.X;
+                        var dy = nextVal.Y - closest.Y;
+                        var dist = Math.Abs(center - closest.X) / Math.Abs(nextVal.X - closest.X);
+
+                        drawPos = new Position(center, closest.Y + dy * dist);
+                    }
+                    
+                    var txt = value.DValue.Value + "";
+                    TextPaint.TextSize = ValueLabelFontSize;
+                    FramePaint.StrokeWidth = BorderThickness;
+                    canvas.DrawCircle(drawPos.X, drawPos.Y, 20, SelectedPaint);
+                    // Move the tip little away from the dot
+                    var tipX = drawPos.X + 8.0f;
+                    var tipY = drawPos.Y;
+
+                    SKRect frameRect = new SKRect();
+                    TextPaint.MeasureText(txt, ref frameRect);
+                    var textHeight = frameRect.Top;
+                    // Inflate for padding
+                    frameRect.Inflate(ValueLabelPadding, ValueLabelPadding);
+
+                    SKPoint GetPoint(float x, float y) => new SKPoint(tipX + x + TriangleWidth, tipY + y);
+
+                    using (var path = new SKPath())
+                    {
+                        var corners = new SKPoint[] {
+                            GetPoint(0, -frameRect.Height*1.2f  / 2),
+                            GetPoint(frameRect.Width*1.5f, -frameRect.Height*1.2f / 2),
+                            GetPoint(frameRect.Width*1.5f, frameRect.Height*1.2f / 2),
+                            GetPoint(0, frameRect.Height*1.2f  / 2)
+                        };
+
+                        path.MoveTo(GetPoint(-TriangleWidth, 0));
+                        path.LineTo(GetPoint(0, -TriangleWidth));
+                        path.ArcTo(corners[0], corners[1], ToolTipCornerRadius);
+                        path.ArcTo(corners[1], corners[2], ToolTipCornerRadius);
+                        path.ArcTo(corners[2], corners[3], ToolTipCornerRadius);
+                        path.ArcTo(corners[3], corners[0], ToolTipCornerRadius);
+                        path.LineTo(GetPoint(0, TriangleWidth));
+                        path.Close();
+                        canvas.DrawPath(path, PinFillPaint);
+                        canvas.DrawPath(path, FramePaint);
+                    }
+
+                    var xText = tipX + TriangleWidth + ValueLabelPadding;
+                    var yText = tipY - frameRect.Height / 2 + ValueLabelPadding - textHeight;
+
+                    canvas.DrawText(txt, xText, yText, TextPaint);
+                }
             }
         }
+
 
         private float GetValue(double value, double max, double min, double drawableLength)
         {
