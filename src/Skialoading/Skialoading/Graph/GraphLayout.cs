@@ -27,38 +27,49 @@ namespace SkiaLoading.Graph
             StrokeWidth = 2,
             StrokeCap = SKStrokeCap.Square,
             PathEffect = SKPathEffect.CreateDash(new[] { 10f, 20f }, 25)
-        }; 
+        };
 
-        private double m_lastIndex, m_offset, m_selectedIndex;
+        private double m_index;
         private readonly object m_lock = new object();
         private readonly SKCanvasView m_tooltipCanvas = new SKCanvasView
         {
             VerticalOptions = LayoutOptions.FillAndExpand,
             HorizontalOptions = LayoutOptions.FillAndExpand,
         };
+
         private readonly SKCanvasView m_canvas = new SKCanvasView
         {
             VerticalOptions = LayoutOptions.FillAndExpand,
             HorizontalOptions = LayoutOptions.FillAndExpand,
         };
-
+        private Grid m_grid;
         public GraphLayout()
         {
             VerticalOptions = LayoutOptions.FillAndExpand;
             HorizontalOptions = LayoutOptions.FillAndExpand;
             m_canvas.PaintSurface += Redraw;
-            var grid = new Grid();
-            grid.Children.Add(m_canvas);
-            grid.Children.Add(m_tooltipCanvas);
-            Content = grid;
+            m_grid = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            m_grid.Children.Add(m_canvas);
+            m_grid.Children.Add(m_tooltipCanvas);
+            Content = m_grid;
         }
 
         private void Redraw(object sender, SKPaintSurfaceEventArgs e)
         {
             var canvas = e.Surface.Canvas;
-            float width = e.Info.Width;
-            float height = e.Info.Height;
-            if (width < 1 || Repository == null) return;
+
+            if (Width < 1 || Repository == null) return;
+            var height = e.Info.Height;
+            var width = e.Info.Width;
+            var center = width/2;
+            var itemWidth = width / 5;
+            var selectedIndex = GetIndexFromValue(m_index);
+            var itemCount = (center * 2) / itemWidth;
+
             lock (m_lock)
             {
                 var points = new List<SKPoint>();
@@ -71,17 +82,48 @@ namespace SkiaLoading.Graph
                     max = Reference.Max;
                     min = Reference.Min;
                 }
-                var itemWidth = width * ElementWidth;
-                var totalWidth = (float)(width / itemWidth);
-                for (var i = m_selectedIndex - totalWidth; i <= m_selectedIndex + totalWidth; i++)
+                var first = GetIndexFromValue(m_index - itemCount);
+                var last = GetIndexFromValue(m_index + itemCount);
+
+                for (var i = first+1; i <= last-1; i++)
                 {
-                    var pos = (int)Math.Floor(i);
-                    var hasValue = Repository.TryGetPoint(Math.Abs(pos), out var point);
-                    if (pos < Config.MinValue || pos > Config.MaxValue) continue;
+                    var iIndex = GetIndexFromValue(i);
+                    var hasValue = Repository.TryGetPoint(Math.Abs(iIndex), out var point);
+                    if (iIndex < Config.MinValue || iIndex > Config.MaxValue) continue;
                     if (!hasValue || point.DValue == null) continue;
 
-                    if (point.DValue > max) max = point.DValue.Value;
-                    if (point.DValue < min) min = point.DValue.Value;
+                    max = Math.Max(max, point.DValue.Value);
+                    min = Math.Min(min, point.DValue.Value);
+                }
+
+                var c = (max - min) / 2.0 + min;
+
+                if (Repository.TryGetPoint(Math.Abs(first), out var firstValue) && first >= Config.MinValue && first <= Config.MaxValue)
+                {
+                    var value = firstValue.DValue.Value;
+                    var dist = Math.Abs(first + 0.5 - (m_index - itemCount));
+                    if (value > max)
+                    {
+                        max = Math.Max(max, (value - c) * dist + c);
+                    }
+                    else if (value < min)
+                    {
+                        min = Math.Min(min, (value - c) * dist + c);
+                    }
+                }
+
+                if (Repository.TryGetPoint(Math.Abs(last), out var lastValue) && last >= Config.MinValue && last <= Config.MaxValue)
+                {
+                    var value = lastValue.DValue.Value;
+                    var dist = Math.Abs(last - 0.5 - (m_index + itemCount));
+                    if (value > max)
+                    {
+                        max = Math.Max(max, (value - c) * dist + c);
+                    }
+                    else if (value < min)
+                    {
+                        min = Math.Min(min, (value - c) * dist + c);
+                    }
                 }
 
                 var diff = max - min;
@@ -89,7 +131,7 @@ namespace SkiaLoading.Graph
                 min -= diff * 0.2;
                 if (Reference != null)
                 {
-                    var x0 = (float)(-width * 2 + itemWidth * (m_selectedIndex - m_lastIndex));
+                    var x0 = (float)(-width * 2 + itemWidth * (selectedIndex - m_index));
                     var x1 = (float)(width * 1.5);
                     var y0 = GetValue(Reference.Max, max, min, height);
                     var y1 = GetValue(Reference.Min, max, min, height);
@@ -103,13 +145,14 @@ namespace SkiaLoading.Graph
 
                 using (var path = new SKPath())
                 {
-                    for (var i = m_selectedIndex - totalWidth; i <= m_selectedIndex + totalWidth; i++)
+                    for (var i = m_index - itemCount; i <= m_index + itemCount; i++)
                     {
-                        var pos = (int)Math.Floor(i);
-                        if (pos < Config.MinValue || pos > Config.MaxValue) continue;
-                        var hasValue = Repository.TryGetPoint(Math.Abs(pos), out var point);
-                        var x = (float)(width / 2 + itemWidth * (i - m_lastIndex + 0.5));
-                        canvas.DrawLine(x, height, x, 0, VerticalLineColor);
+                        var iIndex = GetIndexFromValue(i);
+                        if (iIndex < Config.MinValue || iIndex > Config.MaxValue) continue;
+                        var hasValue = Repository.TryGetPoint(Math.Abs(iIndex), out var point);
+                        if (!hasValue) continue;
+                        var x = (float)(width/2 + itemWidth * (GetIndexFromValue(i) - m_index));
+                        canvas.DrawLine(x, (float)height, x, 0, VerticalLineColor);
 
                         if (!hasValue || point.DValue == null) continue;
                         lastX = x;
@@ -135,8 +178,8 @@ namespace SkiaLoading.Graph
 
                     if (firstX != null)
                     {
-                        path.LineTo(new SKPoint(lastX, height));
-                        path.LineTo(new SKPoint(firstX.Value, height));
+                        path.LineTo(new SKPoint(lastX, (float)height));
+                        path.LineTo(new SKPoint(firstX.Value, (float)height));
                         path.Close();
                         canvas.DrawPath(path, FillPaint);
                     }
@@ -159,13 +202,11 @@ namespace SkiaLoading.Graph
             m_canvas.InvalidateSurface();
         }
 
-        protected override void OnScrolled(double index, double offset, int selectedIndex)
+        protected override void OnScrolled(double index)
         {
             lock (m_lock)
             {
-                m_lastIndex = index;
-                m_offset = offset;
-                m_selectedIndex = selectedIndex;
+                m_index = index;
             }
 
             if (Width < 0.1)
@@ -173,7 +214,7 @@ namespace SkiaLoading.Graph
                 return;
             }
 
-            base.OnScrolled(index, offset, selectedIndex);
+            base.OnScrolled(index);
             Redraw();
         }
 
