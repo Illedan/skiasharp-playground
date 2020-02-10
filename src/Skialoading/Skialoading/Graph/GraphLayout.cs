@@ -172,8 +172,8 @@ namespace SkiaLoading.Graph
                 min -= diff * 0.2;
                 if (Reference != null)
                 {
-                    var x0 = (float)(-width * 2 + itemWidth * (selectedIndex - m_index));
-                    var x1 = (float)(width * 1.5);
+                    var x0 = (float)( -itemWidth * (m_index - selectedIndex));
+                    var x1 = (float)(width);
                     var y0 = GetValue(Reference.Max, max, min, height);
                     var y1 = GetValue(Reference.Min, max, min, height);
                     canvas.DrawLine(new SKPoint(x0, y0), new SKPoint(x1, y0), ReferenceColor);
@@ -265,6 +265,7 @@ namespace SkiaLoading.Graph
                     TextPaint.TextSize = ValueLabelFontSize;
                     FramePaint.StrokeWidth = BorderThickness;
                     canvas.DrawCircle(drawPos.X, drawPos.Y, 20, SelectedPaint);
+                    if (Math.Abs(center - closest.X) > itemWidth*0.2) return;
                     // Move the tip little away from the dots
                     var tipX = drawPos.X + 8.0f;
                     var tipY = drawPos.Y;
